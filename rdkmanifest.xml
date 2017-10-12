@@ -11,7 +11,7 @@
   <remove-project name="meta-qt5/meta-qt5" />
 
   <project remote="rdkgerrit" name="rdk/yocto_oe/layers/meta-qt5" path="layers/meta-qt5" revision="rdk/daisy"/>
-  <project remote="rdkgerrit" name="rdk/yocto_oe/layers/meta-rdk" path="layers/meta-rdk" revision="fdffd8fccd5816228443c4eab9736771c84f18e2"/>
+  <project remote="rdkgerrit" name="rdk/yocto_oe/layers/meta-rdk" path="layers/meta-rdk" revision="a99e198cfbe97c99406961ce70384a3af9467512"/>
   <project remote="github" name="Metrological/meta-metrological" path="layers/meta-metrological" revision="af03ffb0a0e77c557778645b03d94016b3f9e4a9"/>
 
 </manifest>
