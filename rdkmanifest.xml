@@ -28,7 +28,7 @@
     <project remote="cmf" name="components/generic/rdk-oe/meta-rdk-video" path="layers/meta-rdk-video"  revision="master"/>
     <project remote="cmf" name="components/asp/rdk-oe/meta-rdk-bsp-emulator" path="layers/meta-rdk-bsp-emulator" revision="master"/>
 
-    <project remote="github" name="Metrological/meta-metrological" path="layers/meta-metrological" revision="af03ffb0a0e77c557778645b03d94016b3f9e4a9"/>
+    <project remote="github" name="Metrological/meta-metrological" path="layers/meta-metrological" revision="ea1f4fbbcf4d849b59eabaa51649f76f9387cae2"/>
     <project name="linaro-home/meta-lhg" path="layers/meta-lhg" remote="github" />
 
     <project remote="cmf" revision="master" name="components/generic/aamp" />
