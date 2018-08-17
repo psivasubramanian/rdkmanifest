@@ -1,0 +1,121 @@
+#!/bin/sh
+# -*- mode: shell-script-mode; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*-
+#
+# Copyright (C) 2012-13 O.S. Systems Software LTDA.
+# Authored-by:  Otavio Salvador <otavio@ossystems.com.br>
+# Adopted to Angstrom:  Khem Raj <raj.khem@gmail.com>
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License version 2 as
+# published by the Free Software Foundation.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License along
+# with this program; if not, write to the Free Software Foundation, Inc.,
+# 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+#
+. .repo/manifests/setup-environment-internal
+
+BUILD_DIR=$PWD
+LAYER_DIR="../layers"
+CMF_LAYER="meta-cmf"
+LOCAL_CONF="conf/local.conf"
+BBLAYER_CONF="conf/bblayers.conf"
+CMF_LAYER_CONF_FILE="$CMF_LAYER/conf/layer.conf"
+####################################################
+
+case "$(sed -n 's/^__version__ = "\(.*\)"/\1/p' ../bitbake/bin/bitbake)"
+in
+    1.37.*|1.38.*) _DISTRO_VER="sumo" ;;
+    1.35.*|1.36.*) _DISTRO_VER="rocko" ;;
+    1.34.*) _DISTRO_VER="pyro" ;;
+    1.32.*) _DISTRO_VER="morty" ;;
+    1.30.*) _DISTRO_VER="krogoth" ;;
+    *)      _DISTRO_VER="daisy" ;;
+esac
+
+if [ -z "$(grep '^DISTRO_CODENAME' $LOCAL_CONF)" ]; then
+    echo "DISTRO_CODENAME ?= \"${_DISTRO_VER}\"" >> $LOCAL_CONF
+else
+    sed -e "s/##DISTRO_CODENAME##/$_DISTRO_VER/g" -i $LOCAL_CONF
+fi
+####################################################
+
+cd $LAYER_DIR
+# avoid external source configuration, so that all source be internal
+if [ -d $CMF_LAYER -a -f $CMF_LAYER_CONF_FILE ]; then
+    sed -i "/rdk-external-src/d" $CMF_LAYER_CONF_FILE
+fi
+####################################################
+
+# Add rdk & cmf layers only if not already present.
+cd $BUILD_DIR
+
+newlayers=""
+if [ -d $LAYER_DIR/meta-cmf -a -z "$(grep 'meta-cmf[^-]' $BBLAYER_CONF)" ]; then
+    newlayers+="             \${OEROOT}/layers/meta-cmf \\\\\n"
+fi
+if [ -d $LAYER_DIR/meta-cmf-video -a -z "$(grep 'meta-cmf-video[^-]' $BBLAYER_CONF)" ]; then
+    newlayers+="             \${OEROOT}/layers/meta-cmf-video \\\\\n"
+fi
+if [ -d $LAYER_DIR/meta-cmf-qt5 -a -z "$(grep 'meta-cmf-qt5[^-]' $BBLAYER_CONF)" ]; then
+    newlayers+="             \${OEROOT}/layers/meta-cmf-qt5 \\\\\n"
+fi
+if [ -d $LAYER_DIR/meta-cmf-video -a -z "$(grep 'meta-cmf-96boards[^-]' $BBLAYER_CONF)" ]; then
+newlayers+="             \${OEROOT}/layers/meta-cmf-96boards \\\\\n"
+fi
+if [ -d $LAYER_DIR/meta-rdk -a -z "$(grep 'meta-rdk[^-]' $BBLAYER_CONF)" ]; then
+    newlayers+="             \${OEROOT}/layers/meta-rdk \\\\\n"
+fi
+if [ -d $LAYER_DIR/meta-rdk-video -a -z "$(grep 'meta-rdk-video[^-]' $BBLAYER_CONF)" ]; then
+    newlayers+="             \${OEROOT}/layers/meta-rdk-video \\\\\n"
+fi
+if [ -d $LAYER_DIR/meta-rdk-ext -a -z "$(grep 'meta-rdk-ext[^-]' $BBLAYER_CONF)" ]; then
+    newlayers+="             \${OEROOT}/layers/meta-rdk-ext \\\\\n"
+fi
+if [ -d $LAYER_DIR/meta-rdk-restricted -a -z "$(grep 'meta-rdk-restricted[^-]' $BBLAYER_CONF)" ]; then
+    newlayers+="             \${OEROOT}/layers/meta-rdk-restricted \\\\\n"
+fi
+if [ -d $LAYER_DIR/meta-cmf-restricted -a -z "$(grep 'meta-cmf-restricted[^-]' $BBLAYER_CONF)" ]; then
+    newlayers+="             \${OEROOT}/layers/meta-cmf-restricted \\\\\n"
+fi
+
+if [ ! -z "$newlayers" ] ; then
+    echo "BBLAYERS += \" \\" >> $BBLAYER_CONF
+    echo -e "$newlayers            \"" >> $BBLAYER_CONF
+fi
+
+#add metrological and LHG layers
+newlayers=""
+if [ -d $LAYER_DIR/meta-metrological -a -z "$(grep 'meta-metrological[^-]' $BBLAYER_CONF)" ]; then
+    newlayers+="             \${OEROOT}/layers/meta-metrological \\\\\n"
+fi
+if [ -d $LAYER_DIR/meta-lhg -a -z "$(grep 'meta-lhg\/meta-lhg[^-]' $BBLAYER_CONF)" ]; then
+    newlayers+="             \${OEROOT}/layers/meta-lhg/meta-lhg \\\\\n"
+fi
+if [ -d $LAYER_DIR/meta-lhg/meta-lhg-wpe -a -z "$(grep 'meta-lhg\/meta-lhg-wpe[^-]' $BBLAYER_CONF)" ]; then
+newlayers+="             \${OEROOT}/layers/meta-lhg/meta-lhg-wpe \\\\\n"
+fi
+if [ -d $LAYER_DIR/meta-lhg-prop -a -z "$(grep 'meta-lhg-prop[^-]' $BBLAYER_CONF)" ]; then
+newlayers+="             \${OEROOT}/layers/meta-lhg-prop \\\\\n"
+fi
+
+if [ ! -z "$newlayers" ] ; then
+    echo "BBLAYERS += \" \\" >> $BBLAYER_CONF
+    echo -e "$newlayers            \"" >> $BBLAYER_CONF
+fi
+echo "RDK layers are configured"
+
+# if meta-rpb layer not found but included in BBLAYERS, remove it. Because RDK distro is choosed
+if [ ! -d $LAYER_DIR/meta-rpb -a ! -z "$(grep 'meta-rpb[^-]' $BBLAYER_CONF)" ]; then
+    sed -i '/meta-rpb/d' $BBLAYER_CONF
+fi
+####################################################
+
+#change Layer configuration version to 6
+sed -i 's/LCONF_VERSION = "[0-9]"/LCONF_VERSION = "6"/' $BBLAYER_CONF
+####################################################

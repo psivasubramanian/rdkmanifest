@@ -1,17 +1,136 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <manifest>
-<default revision="morty" sync-j="4"/>
-
-  <remote  name="rdkgerrit"
-           fetch="ssh://lhg-review.linaro.org:29418/lhg/"
-           review="https://lhg-review.linaro.org/" />
-
+  <remote name="cmf"
+          fetch="https://code.rdkcentral.com/r/"
+          review="https://code.rdkcentral.com/r/" />
 
   <remove-project name="96boards/meta-rpb" />
   <remove-project name="meta-qt5/meta-qt5" />
+  <remove-project name="96boards/meta-96boards" />
 
-  <project remote="rdkgerrit" name="rdk/yocto_oe/layers/meta-qt5" path="layers/meta-qt5" revision="rdk/daisy"/>
-  <project remote="rdkgerrit" name="rdk/yocto_oe/layers/meta-rdk" path="layers/meta-rdk" revision="a99e198cfbe97c99406961ce70384a3af9467512"/>
-  <project remote="github" name="Metrological/meta-metrological" path="layers/meta-metrological" revision="af03ffb0a0e77c557778645b03d94016b3f9e4a9"/>
+    <project name="96boards/meta-96boards" path="layers/meta-96boards" remote="github" revision="f2d9bf62f7cf4c3cac5f23f603ad712a21213239"/>
+    <project remote="cmf" name="rdk/components/opensource/oe/meta-qt5" path="layers/meta-qt5" revision="rdk/morty"/>
+
+    <project remote="cmf" name="components/generic/rdk-oe/meta-cmf" path="layers/meta-cmf" revision="master">
+        <linkfile dest="setup-rdk-environment" src="../../.repo/local_manifests/setup-environment"/>
+    </project>
+    <project remote="cmf" name="components/generic/rdk-oe/meta-cmf-qt5" path="layers/meta-cmf-qt5"  revision="master"/>
+    <project remote="cmf" name="components/generic/rdk-oe/meta-cmf-video" path="layers/meta-cmf-video"  revision="master"/>
+    <project remote="cmf" name="components/opensource/patches/qtbase-5.1.1" path="layers/meta-cmf-qt5/recipes-qt/qt5/qtbase-5.1.1" revision="master"/>
+    <project remote="cmf" name="components/opensource/patches/qtwebkit-5.1.1" path="layers/meta-cmf-qt5/recipes-qt/qt5/qtwebkit-5.1.1" revision="master"/>
+    <project remote="cmf" name="components/opensource/patches/qtwebsockets-0.9.0" path="layers/meta-cmf-qt5/recipes-qt/qt5/qtwebsockets-5.1.1" revision="master"/>
+    <project remote="cmf" name="components/generic/rdk-oe/meta-cmf-96boards" path="layers/meta-cmf-96boards"  revision="master"/>
+    <project remote="cmf" name="components/restricted/rdk-oe/meta-rdk-restricted" path="layers/meta-rdk-restricted"  revision="master"/>
+    <project remote="cmf" name="components/restricted/rdk-oe/meta-cmf-restricted" path="layers/meta-cmf-restricted"  revision="master"/>
+    <project remote="cmf" name="components/generic/rdk-oe/meta-rdk" path="layers/meta-rdk"  revision="master"/>
+    <project remote="cmf" name="components/generic/rdk-oe/meta-rdk-containers" path="layers/meta-rdk-containers"  revision="master"/>
+    <project remote="cmf" name="components/generic/rdk-oe/meta-rdk-ext" path="layers/meta-rdk-ext"  revision="master"/>
+    <project remote="cmf" name="components/generic/rdk-oe/meta-rdk-video" path="layers/meta-rdk-video"  revision="master"/>
+    <project remote="cmf" name="components/asp/rdk-oe/meta-rdk-bsp-emulator" path="layers/meta-rdk-bsp-emulator" revision="master"/>
+
+    <project remote="github" name="Metrological/meta-metrological" path="layers/meta-metrological" revision="af03ffb0a0e77c557778645b03d94016b3f9e4a9"/>
+    <project name="linaro-home/meta-lhg" path="layers/meta-lhg" remote="github" />
+
+    <project remote="cmf" revision="master" name="components/generic/aamp" />
+    <project remote="cmf" revision="master" name="components/generic/closedcaption" />
+    <project remote="cmf" revision="master" name="components/generic/dvb/graphicsEngine" />
+    <project remote="cmf" revision="master" name="components/generic/dvb/subtitles" />
+    <project remote="cmf" revision="master" name="components/generic/dvb/teletext" />
+    <project remote="cmf" revision="master" name="components/generic/dvb/ttx_subtitle_utils" />
+    <project remote="cmf" revision="master" name="components/generic/dvr" />
+    <project remote="cmf" revision="master" name="components/generic/gst-plugins-rdk" />
+    <project remote="cmf" revision="master" name="components/generic/gst-plugins-rdk-dvr" />
+    <project remote="cmf" revision="master" name="components/generic/mediaframework" />
+    <project remote="cmf" revision="master" name="components/generic/mfrlibs" />
+    <project remote="cmf" revision="master" name="components/generic/rdk-oe/devicesettings-hal-sample" />
+    <project remote="cmf" revision="master" name="components/generic/rdk-oe/iarmmgrs-hal-sample" />
+    <project remote="cmf" revision="master" name="components/generic/recorder" />
+    <project remote="cmf" revision="master" name="components/generic/tools" />
+    <project remote="cmf" revision="master" name="components/generic/tr69" />
+    <project remote="cmf" revision="master" name="components/opensource/westeros" />
+    <project remote="cmf" revision="master" name="components/opensource/patches/rdk-oe" path="patches/rdk-oe"/>
+    <project remote="cmf" revision="master" name="devices/intel-x86-pc/rdkemulator/closedcaption" />
+    <project remote="cmf" revision="master" name="devices/intel-x86-pc/rdkemulator/closedcaption" path="components/generic/closedcaption/platform/rdkemulator" />
+    <project remote="cmf" revision="master" name="devices/intel-x86-pc/rdkemulator/gst-plugins-rdk/playersinkbin" path="devices/intel-x86-pc/rdkemulator/gst-plugins-playersinkbin" />
+    <project remote="cmf" revision="master" name="devices/intel-x86-pc/rdkemulator/gst-plugins-rdk/qamtunersrc" />
+    <project remote="cmf" revision="master" name="devices/intel-x86-pc/rdkemulator/mfrlibs" />
+    <project remote="cmf" revision="master" name="devices/intel-x86-pc/rdkemulator/tdk" path="tools/tdk/platform/emulator" />
+    <project remote="cmf" revision="master" name="devices/intel-x86-pc/rdkemulator/tr69" path="components/generic/tr69/platform/rdkemulator" />
+    <project remote="cmf" revision="master" name="devices/intel-x86-pc/rdkri/lxc" />
+    <project remote="cmf" revision="master" name="devices/intel-x86-pc/rdkri/mediaframework" path="components/generic/mediaframework/rdkri" />
+    <project remote="cmf" revision="master" name="devices/intel-x86-pc/rdkri/westeros" />
+    <project remote="cmf" revision="master" name="devices/raspberrypi/devicesettings" />
+    <project remote="cmf" revision="master" name="devices/raspberrypi/dvr" />
+    <project remote="cmf" revision="master" name="devices/raspberrypi/gst-plugins-rdk/playersinkbin" path="devices/raspberrypi/gst-plugins-playersinkbin" />
+    <project remote="cmf" revision="master" name="devices/raspberrypi/mediaframework" />
+    <project remote="cmf" revision="master" name="devices/raspberrypi/mfrlibs" />
+    <project remote="cmf" revision="master" name="devices/raspberrypi/tdk" path="tools/tdk/platform/raspberrypi" />
+    <project remote="cmf" revision="master" name="docs" />
+    <project remote="cmf" revision="master" name="rdk/components/generic/audiocapturemgr" />
+    <project remote="cmf" revision="master" name="rdk/components/generic/bluetooth" />
+    <project remote="cmf" revision="master" name="rdk/components/generic/bluetooth_mgr" />
+    <project remote="cmf" revision="master" name="rdk/components/generic/breakpad_wrapper" />
+    <project remote="cmf" revision="master" name="rdk/components/generic/cpuprocanalyzer" />
+    <project remote="cmf" revision="master" name="rdk/components/generic/crashupload" />
+    <project remote="cmf" revision="master" name="rdk/components/generic/dca" />
+    <project remote="cmf" revision="master" name="rdk/components/generic/dcm" />
+    <project remote="cmf" revision="master" name="rdk/components/generic/devicesettings" />
+    <project remote="cmf" revision="master" name="rdk/components/generic/diagnostics" />
+    <project remote="cmf" revision="master" name="rdk/components/generic/dtcp" />
+    <project remote="cmf" revision="master" name="rdk/components/generic/hdmicec" />
+    <project remote="cmf" revision="master" name="rdk/components/generic/hwselftest" />
+    <project remote="cmf" revision="master" name="rdk/components/generic/iarmbus" />
+    <project remote="cmf" revision="master" name="rdk/components/generic/iarmmgrs" />
+    <project remote="cmf" revision="master" name="rdk/components/generic/injectedbundle" />
+    <project remote="cmf" revision="master" name="rdk/components/generic/ledmgr" />
+    <project remote="cmf" revision="master" name="rdk/components/generic/libusbctrl" />
+    <project remote="cmf" revision="master" name="rdk/components/generic/media_utils" />
+    <project remote="cmf" revision="master" name="rdk/components/generic/mocahal" />
+    <project remote="cmf" revision="master" name="rdk/components/generic/netmonitor" />
+    <project remote="cmf" revision="master" name="rdk/components/generic/netsrvmgr" />
+    <project remote="cmf" revision="master" name="rdk/components/generic/rdk_logger" />
+    <project remote="cmf" revision="master" name="rdk/components/generic/rdkapps" path="rdk/components/generic/rdkbrowser/rdkapps" />
+    <project remote="cmf" revision="master" name="rdk/components/generic/rdkbrowser" />
+    <project remote="cmf" revision="master" name="rdk/components/generic/rdkbrowser2" />
+    <project remote="cmf" revision="master" name="rdk/components/generic/rdm" />
+    <project remote="cmf" revision="master" name="rdk/components/generic/rfc" />
+    <project remote="cmf" revision="master" name="rdk/components/generic/rmf_mediastreamer" />
+    <project remote="cmf" revision="master" name="rdk/components/generic/rmf_tools/generate_si_cache" />
+    <project remote="cmf" revision="master" name="rdk/components/generic/rmf_tools/tenableHDCP" />
+    <project remote="cmf" revision="master" name="rdk/components/generic/servicemanager" />
+    <project remote="cmf" revision="master" name="rdk/components/generic/servicemanager" path="rdk/components/generic/rdkbrowser/servicemanager" />
+    <project remote="cmf" revision="master" name="rdk/components/generic/servicemanager" path="tools/tdk/SM_stub/servicemanager" />
+    <project remote="cmf" revision="master" name="rdk/components/generic/storagemanager" />
+    <project remote="cmf" revision="master" name="rdk/components/generic/sys_mon_tools/analyzers/scripts/host" />
+    <project remote="cmf" revision="master" name="rdk/components/generic/sys_mon_tools/analyzers/scripts/target" />
+    <project remote="cmf" revision="master" name="rdk/components/generic/sys_mon_tools/hostdataconverter" />
+    <project remote="cmf" revision="master" name="rdk/components/generic/sys_mon_tools/iarm_event_sender" />
+    <project remote="cmf" revision="master" name="rdk/components/generic/sys_mon_tools/iarm_query_powerstate" />
+    <project remote="cmf" revision="master" name="rdk/components/generic/sys_mon_tools/iarm_set_powerstate" />
+    <project remote="cmf" revision="master" name="rdk/components/generic/sys_mon_tools/key_simulator" />
+    <project remote="cmf" revision="master" name="rdk/components/generic/sys_mon_tools/mfr_data" />
+    <project remote="cmf" revision="master" name="rdk/components/generic/sys_mon_tools/mfr_utils" />
+    <project remote="cmf" revision="master" name="rdk/components/generic/sys_mon_tools/power-state-monitor" />
+    <project remote="cmf" revision="master" name="rdk/components/generic/sys_mon_tools/rdklogctrl" />
+    <project remote="cmf" revision="master" name="rdk/components/generic/sys_mon_tools/si_cache_parser" />
+    <project remote="cmf" revision="master" name="rdk/components/generic/sys_mon_tools/sys_resource" />
+    <project remote="cmf" revision="master" name="rdk/components/generic/sys_mon_tools/sys_utils" />
+    <project remote="cmf" revision="master" name="rdk/components/generic/sys_mon_tools/udhcpc-opt43" />
+    <project remote="cmf" revision="master" name="rdk/components/generic/sysint" />
+    <project remote="cmf" revision="master" name="rdk/components/generic/syslog_helper" />
+    <project remote="cmf" revision="master" name="rdk/components/generic/tr69hostif" />
+    <project remote="cmf" revision="master" name="rdk/components/generic/trm" />
+    <project remote="cmf" revision="master" name="rdk/components/generic/wifi" />
+    <project remote="cmf" revision="master" name="rdk/components/generic/xconf-simulator" />
+    <project remote="cmf" revision="master" name="rdk/components/generic/xupnp" />
+    <project remote="cmf" revision="master" name="rdk/devices/intel-x86-pc/emulator/devicesettings" />
+    <project remote="cmf" revision="master" name="rdk/devices/intel-x86-pc/emulator/iarmmgrs" />
+    <project remote="cmf" revision="master" name="rdk/devices/intel-x86-pc/emulator/rdkbrowser" path="rdk/components/generic/rdkbrowser/platform/rdkemulator" />
+    <project remote="cmf" revision="master" name="rdk/devices/intel-x86-pc/emulator/rmf_mediastreamer" path="rdk/components/generic/rmf_mediastreamer/platform/rdkemulator" />
+    <project remote="cmf" revision="master" name="rdk/devices/intel-x86-pc/emulator/servicemanager" path="rdk/components/generic/servicemanager/platform/rdkemulator" />
+    <project remote="cmf" revision="master" name="rdk/devices/intel-x86-pc/emulator/sysint" path="rdk/components/generic/sysint/device" />
+    <project remote="cmf" revision="master" name="rdk/devices/raspberrypi/iarmmgrs" />
+    <project remote="cmf" revision="master" name="rdk/devices/raspberrypi/wifi" />
+    <project remote="cmf" revision="master" name="tools/tdk" />
 
 </manifest>

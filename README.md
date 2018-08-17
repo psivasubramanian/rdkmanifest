@@ -1,5 +1,5 @@
 # rdkmanifest
-This repository contains a local manifest that can be used to build RDK mediaclient image for hikey based on OE  buildsystem.
+This repository contains a local manifest that can be used to build RDK mediaclient image for hikey based on OE buildsystem.
 
 # 1) Setup OE system
 
@@ -13,7 +13,7 @@ $ chmod a+x ~/bin/repo
 
 Run repo init to bring down the latest version of Repo with all its most recent bug fixes. You must specify a URL for the manifest, which specifies where the various repositories included in the Android source will be placed within your working directory. To check out the current branch, specify it with -b:
 
-$ repo init -u https://github.com/96boards/oe-rpb-manifest.git -b krogoth
+$ repo init -u https://github.com/96boards/oe-rpb-manifest.git -b morty
 
 When prompted, configure Repo with your real name and email address.
 
@@ -23,7 +23,7 @@ A successful initialization will end with a message stating that Repo is initial
 
 $ cd .repo
 
-$ git clone https://github.com/psivasubramanian/rdkmanifest.git local_manifests
+$ git clone https://github.com/moorthy-bs/rdkmanifest.git local_manifests
 
 $  cd ..
 
@@ -46,33 +46,37 @@ $ repo sync -j1
 
 # 4) Setup Environment
 
-MACHINE values can be:
+MACHINE :
 hikey-32
 
-DISTRO values can be:
+DISTRO :
 rdk
 
-$ source setup-environment
+$ source setup-rdk-environment
 
-# 5) Configure BBLAYERS and local.conf
+From the “Available Machines” menu, navigate to “hikey-32” to select and press enter to proceed. Further in “Available Distributions”, “rdk” to be selected. Once MACHINE and DISTRO are selected, “build-rdk” directory will be created and the prompt points to the same
 
-$ bitbake-layers add-layer ../layers/meta-rdk
-
-$ bitbake-layers add-layer ../layers/meta-metrological/
+# 5) Configure local.conf
 
 Append the following to conf/local.conf
 
-RDK_GIT="lhg-review.linaro.org:29418/lhg"
+###############################################
 
 require ${OEROOT}/layers/meta-rdk/conf/distro/include/rdkv.inc
 
-BBMASK = "sysint-broadband tdk-b recipes-ccsp closedcaption meta-rdk/recipes-core/systemd meta-rdk/recipes-devtools/e2fsprogs meta-rdk/recipes-graphics/directfb"
+BBMASK .= " usbctrl mfr-utils injectedbundle moca-hal hwselftest audiocapturemgr webpa  gstreamer1.0-plugins-ugly_1.12.2 meta-rdk-ext/recipes-extended/opencdm meta-metrological/recipes-drm/opencdmi meta-lhg/meta-lhg/recipes-samples/images"
 
-DISTRO_FEATURES_remove = " bluetooth wifi"
+#recipes pointing to RDK gerrit
+BBMASK .= " meta-rdk/recipes-connectivity/bluetooth meta-rdk-video/recipes-qt/sec-api/ meta-rdk-video/recipes-graphics/westeros/westeros-mediacapture.bb meta-rdk-ext/recipes-extended/jquery meta-rdk-ext/recipes-support/base64 meta-rdk-ext/recipes-qt/qt5/qtwebsockets_5.1.1.bb meta-rdk-video/recipes-extended/rdk-nodejs meta-rdk-video/recipes-extended/rdkmediaplayer meta-rdk-video/recipes-extended/appmanager meta-rdk-video/recipes-extended/fog"
 
-DISTRO_FEATURES_append = " directfb westeros"
+#patches repeated in metrological layer
+#meta-linaro repeating binutils 2.27
+BBMASK .= " meta-metrological/recipes-graphics/cairo meta-linaro/meta-linaro-toolchain/recipes-devtools/binutils"
 
-EXTRA_OEMAKE += "-e MAKEFLAGS="
+#mask wayland 1.6 recipes from meta-rdk layer, so that 1.11 version will be picked from openembedded-core
+BBMASK .= " meta-rdk-ext/recipes-graphics/wayland"
+
+###############################################
 
 # 6) Build
 
@@ -135,4 +139,4 @@ $ repo rebase
 
 # Maintainer
 
-Sivasubramanian Patchaiperumal sivasubramanian.patchaiperumal@linaro.org
+Moorthy Baskaravenkatraman moorthy.baskaravenkatraman-sambamoorthy@linaro.org
