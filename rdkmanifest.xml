@@ -6,9 +6,7 @@
 
   <remove-project name="96boards/meta-rpb" />
   <remove-project name="meta-qt5/meta-qt5" />
-  <remove-project name="96boards/meta-96boards" />
-
-    <project name="96boards/meta-96boards" path="layers/meta-96boards" remote="github" revision="f2d9bf62f7cf4c3cac5f23f603ad712a21213239"/>
+  
     <project remote="cmf" name="rdk/components/opensource/oe/meta-qt5" path="layers/meta-qt5" revision="rdk/morty"/>
 
     <project remote="cmf" name="components/generic/rdk-oe/meta-cmf" path="layers/meta-cmf" revision="master">
